@@ -7,23 +7,27 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.org.apache.xalan.internal.xsltc.runtime.Parameter;
+
 /**
  * Servlet implementation class ServletLogin
  */
-@WebServlet("/login")
-public class ServletLogin extends HttpServlet {
+@WebServlet("/produtos")
+public class ServletProduto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletLogin() {
+    public ServletProduto() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,6 +48,8 @@ public class ServletLogin extends HttpServlet {
 	out.println("<html><head><title>Resultado do Login</title></head>");
 	out.println("<body>");
 	
+	ArrayList<String> produtos = new ArrayList<String>();
+	
 	
 	//conectar no banco de dados
 	
@@ -63,24 +69,32 @@ public class ServletLogin extends HttpServlet {
 		//		"where nomeusuario = '" + usuario + "' and senhausuario = '" + senha + "'";
 		
 		//Criando o SQL - jeito melhor 
-		String sql= "select nomeusuario, senhausuario from usuario where nomeusuario = ? and senhausuario = ? ";
+		String sql= "select * from produto";
 		
 		// Preparar o SQL para envio ao BD
 		PreparedStatement ps= conexao.prepareStatement(sql);
-		// Passar o valor de usuario
-		ps.setString(1, usuario);
-		// Passar o valor de senha 
-		ps.setString(2, senha);
+		
+		
 		
 		// Executando o SQL
 		ResultSet rs= ps.executeQuery();
 		
 		//verificar se usuario e senha estao corretos
 		
-		if (rs.first()) {
-			out.println("<h1>Login com sucesso!</h1><form action=\"produtos\" ><input type=\"submit\" value=\"Listar produtos\" /></form> ");
-		}else {
-			out.println("<h1>Login sem sucesso! </h1>");
+		while(rs.next()) {
+			String nome = rs.getString("nomeproduto");
+			String descricao = rs.getString("descricaoproduto");
+			String fabricante = rs.getString("fabricanteproduto");
+			String preço = rs.getString("preçoproduto");
+			
+			
+			produtos.add(nome + "#" + descricao + "#" + fabricante + "#" + preço);
+		}
+		
+		for (String produto : produtos) {
+			String parameters[] = produto.split("#");
+			
+			out.println("Nome:  " + parameters[0] + "  Descricao: " + parameters[1] + "  Fabricante: " + parameters[2]+ "  Preços: " + parameters[3]+ "<br>");
 		}
 		
 		// fechar o ResultSet
