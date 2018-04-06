@@ -35,8 +35,7 @@ public class ServletProduto extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//recuperar parametros
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		//recuperar parametros
 	
 	String usuario = request.getParameter("usuario");
 	String senha = request.getParameter("senha");
@@ -82,21 +81,15 @@ public class ServletProduto extends HttpServlet {
 		//verificar se usuario e senha estao corretos
 		
 		while(rs.next()) {
-			String nome = rs.getString("nomeproduto");
+			String nomeProduto = rs.getString("nomeproduto");
 			//String descricao = rs.getString("descricaoproduto");
 			//String fabricante = rs.getString("fabricanteproduto");
 			//String preço = rs.getString("preçoproduto");
 			int idProduto = rs.getInt("idproduto");
 			
 			
-			out.print(idProduto + ". " + "<a href=\"detalheProduto?id="+ idProduto + "\">" + nome + "</a> " + " " + "<br/>");
+			out.print(idProduto + ". " + "<a href=\"detalheProduto?id="+ idProduto + "\">" + nomeProduto + "</a> " + " " + "<a href=\"excluirProduto?id=" + idProduto + "&nome=" + nomeProduto +  "\"> Excluir</a><br/>" );
 			//produtos.add(nome + "#" + descricao + "#" + fabricante + "#" + preço);
-		}
-		
-		for (String produto : produtos) {
-			String parameters[] = produto.split("#");
-			
-			out.println("Nome:  " + parameters[0] + "  Descricao: " + parameters[1] + "  Fabricante: " + parameters[2]+ "  Preços: " + parameters[3]+ "<br>");
 		}
 		
 		// fechar o ResultSet
