@@ -83,12 +83,14 @@ public class ServletProduto extends HttpServlet {
 		
 		while(rs.next()) {
 			String nome = rs.getString("nomeproduto");
-			String descricao = rs.getString("descricaoproduto");
-			String fabricante = rs.getString("fabricanteproduto");
-			String preço = rs.getString("preçoproduto");
+			//String descricao = rs.getString("descricaoproduto");
+			//String fabricante = rs.getString("fabricanteproduto");
+			//String preço = rs.getString("preçoproduto");
+			int idProduto = rs.getInt("idproduto");
 			
 			
-			produtos.add(nome + "#" + descricao + "#" + fabricante + "#" + preço);
+			out.print(idProduto + ". " + "<a href=\"detalheProduto?id="+ idProduto + "\">" + nome + "</a> " + " " + "<br/>");
+			//produtos.add(nome + "#" + descricao + "#" + fabricante + "#" + preço);
 		}
 		
 		for (String produto : produtos) {
