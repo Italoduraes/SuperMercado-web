@@ -88,9 +88,11 @@ public class ServletProduto extends HttpServlet {
 			int idProduto = rs.getInt("idproduto");
 			
 			
-			out.print(idProduto + ". " + "<a href=\"detalheProduto?id="+ idProduto + "\">" + nomeProduto + "</a> " + " " + "<a href=\"excluirProduto?id=" + idProduto + "&nome=" + nomeProduto +  "\"> Excluir</a><br/>" );
+			out.print(idProduto + ". " + "<a href=\"detalheProduto?id="+ idProduto + "\">" + nomeProduto + "</a> " + " " + "<a href=\"excluirProduto?id=" + idProduto + "&nome=" + nomeProduto +  "\"> Excluir</a><br/>");                         
 			//produtos.add(nome + "#" + descricao + "#" + fabricante + "#" + preço);
 		}
+		
+		out.print("<a href=\"incluirProduto.html\">Novo produto</a>");
 		
 		// fechar o ResultSet
 		rs.close();
